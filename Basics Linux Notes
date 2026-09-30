@@ -1,0 +1,484 @@
+1.pwd--show current working directory
+cd foldername--change directory
+cd ..--move one level back/parent directory
+cd ~--go to home directory
+cd "OneDrive - Hexaware Technologies"--change directory when folder name contains spaces
+cd desktop--move to desktop folder
+cd "desktop/shell scripting - linux,perl"--change directory to path containing spaces
+cd /c/Users/2000186387--go to absolute path
+pwd--verify current directory after cd
+cd OneDrive - Hexaware Technologies--fails due to spaces(too many arguments)
+cd "OneDrive - Hexaware Technologies"--works because path is enclosed in quotes
+cd ..--go back one folder
+cd ~--go to home directory
+ls--check available folders before using cd
+2.ls--list files and folders
+3.ls -la--show detailed file listing
+4.cat customer.txt--display entire file
+5.cat -n customer.txt--display file with line numbers
+6.wc -l customer.txt--count total lines in file
+7.head -5 customer.txt--show first 5 lines
+8.head -1 customer.txt--show first line only
+9.tail -5 customer.txt--show last 5 lines
+10.tail -1 customer.txt--show last line only
+11.tail -3 customer.txt--show last 3 lines
+12.tail -n +2 customer.txt--skip header,start from line 2
+13.tail -n +5 customer.txt--skip first 4 lines,start from line 5
+14.grep "ACTIVE" customer.txt--find ACTIVE,also matches INACTIVE
+15.grep "|ACTIVE|" customer.txt--find only ACTIVE records
+16.grep -n "|ACTIVE|" customer.txt--find ACTIVE records with line numbers
+17.grep -c "ACTIVE" customer.txt--count ACTIVE,also counts INACTIVE
+18.grep -c "|ACTIVE|" customer.txt--count only ACTIVE records
+19.grep "||" customer.txt--find records with empty fields
+20.grep "1009" customer.txt--find customer id 1009
+21.grep -i "active" customer.txt--search text ignoring case
+22.echo "HEADER" > header.txt--create file or overwrite existing file
+23.echo "record" >> customer.txt--append record to end of file
+24.cat customer.txt >> header.txt--append file content
+25.cat header.txt customer.txt > customer_new.txt--merge files
+26.cp source.txt target.txt--copy file
+27.cp customer.txt customer_bkp.txt--create backup file
+28.mv old.txt new.txt--rename file
+29.mv file.txt folder/--move file to folder
+30.rm customer.txt--delete file
+31.cut -d'|' -f1 customer.txt--show column 1
+32.cut -d'|' -f2 customer.txt--show column 2
+33.cut -d'|' -f1,2 customer.txt--show columns 1 and 2
+34.cut -d'|' -f1,2,3 customer.txt--show columns 1,2,3
+35.cut -d'|' -f1,2,4 customer.txt--show columns 1,2,4
+36.sed -i 's/ACTIVE/OPEN/' customer.txt--replace first match and update file
+37.sed -i 's/ACTIVE/OPEN/g' customer.txt--replace all matches and update file
+38.sed -i 's/John Smith/John S/' customer.txt--replace specific text
+39.sed 's/ACTIVE/OPEN/' customer.txt--show modified output only
+40.sed -i '2d' customer.txt--delete line 2
+41.sed -i '2,4d' customer.txt--delete lines 2 to 4
+42.sed -i '7,10d' customer.txt--delete lines 7 to 10
+43.sed -i '4d;2d' customer.txt--delete only lines 4 and 2
+44.sed -i '/Velmurali/d' customer.txt--delete line containing Velmurali
+45.sed -i '/text/d' customer.txt--delete lines containing text
+46.sed -i 's/450001015|/45000\
+1015|/' customer.txt--split merged record into new line
+47.sort customer.txt--sort entire file
+48.sort -t'|' -k1 customer.txt--sort by column 1
+49.sort -t'|' -k2 customer.txt--sort by column 2
+50.sort -t'|' -k4 customer.txt--sort by column 4
+51.nano customer.txt--open file in nano editor
+52.Ctrl+O--save file in nano
+53.Ctrl+X--exit nano
+54.vi customer.txt--open file in vi editor
+55.i--enter insert mode
+56.Esc--exit insert mode
+57.dd--delete current line
+58.yy--copy current line
+59.p--paste copied line
+60.:w--save file
+61.:q--quit file
+62.:wq--save and quit
+63.:q!--quit without saving
+64.>--create or overwrite file
+65.>>--append data to file
+66.|--column delimiter or pipe output to next command
+67.-d--delimiter option
+68.-f--field/column option
+69.-i(grep)--ignore case
+70.-i(sed)--update file in place
+71.s--substitute/replace
+72.g--global replace all matches
+73./--sed separator
+74.\--insert newline or escape character
+75.-t--sort delimiter
+76.-k--sort column key
+77.&&--run next command if previous command succeeds
+78.()--group multiple commands together
+uniq--remove duplicate records
+uniq -c--show count of each record
+uniq -d--show duplicate records only
+uniq -u--show unique(non-duplicate) records only
+sort customer.txt | uniq--remove duplicate records
+sort customer.txt | uniq -c--show record count
+sort customer.txt | uniq -d--show duplicate records only
+sort customer.txt | uniq -cd--show duplicate records with count
+sort customer.txt | uniq | wc -l--count distinct records
+sort customer.txt | uniq -u | wc -l--count unique(non-duplicate) records
+sort customer.txt | uniq -d | wc -l--count duplicate record patterns
+(head -1 customer.txt && tail -n +2 customer.txt | sort | uniq -c)--keep header on top and count records
+head -1 customer.txt--show header only
+uniq Learning
+uniq--works on consecutive records
+sort | uniq--commonly used together before checking duplicates
+-c--count occurrences
+-d--duplicates only
+-u--unique records only
+awk--filter,extract,count and calculate data
+awk -F'|' '{print $1}' customer.txt--show column1
+awk -F'|' '{print $2}' customer.txt--show column2
+awk -F'|' '{print $1,$2,$5}' customer.txt--show customerid,name,balance
+awk -F'|' '$4=="ACTIVE"' customer.txt--show ACTIVE records
+awk -F'|' '$4=="ACTIVE" {print $1,$2,$5}' customer.txt--show ACTIVE customer details
+awk -F'|' '$5>10000' customer.txt--show records with balance greater than 10000
+awk -F'|' '$5>10000 {print $1,$2,$5}' customer.txt--show customer details with balance greater than 10000
+awk -F'|' '$5==0' customer.txt--show zero balance records
+awk -F'|' '$5==0 {print $1,$2,$5}' customer.txt--show zero balance customer details
+awk 'END{print NR}' customer.txt--count total records
+awk 'NR>1{count++} END{print count}' customer.txt--count records excluding header
+awk -F'|' '$4=="ACTIVE" {count++} END{print count}' customer.txt--count ACTIVE records
+awk -F'|' '$4=="INACTIVE" {count++} END{print count}' customer.txt--count INACTIVE records
+awk -F'|' '$4=="CLOSED" {count++} END{print count}' customer.txt--count CLOSED records
+awk -F'|' '$5>10000 {count++} END{print count}' customer.txt--count records with balance greater than 10000
+awk -F'|' 'NR>1 {sum+=$5} END{print sum}' customer.txt--sum all balances
+-F--field delimiter
+$1--column1
+$2--column2
+$3--column3
+$4--column4
+$5--column5
+NR--current record number
+count++--increment count by 1
+sum+=$5--add column5 value to sum
+BEGIN{}--execute before reading records
+END{}--execute after processing all records
+END{print count}--print result after processing all records
+-------------------------------------------------------------------------------------------------------------------------------------------
+Realtime
+--------
+pwd--where am I currently working
+ls--what files/folders are available
+ls -la--check file details, permissions, size
+cd batch_folder--move to required project folder
+cat customer.txt--view batch file data
+cat -n customer.txt--view file with line numbers for troubleshooting
+head -10 app.log--check beginning of log file
+tail -50 app.log--check latest log entries
+tail -f app.log--monitor log file continuously
+wc -l customer.txt--count records received from source
+grep ERROR app.log--find errors in log file
+grep "|ACTIVE|" customer.txt--find ACTIVE customers
+grep -c "|ACTIVE|" customer.txt--count ACTIVE customers
+grep "1009" customer.txt--find specific customer/account
+grep "||" customer.txt--find records with null values
+cut -d'|' -f1 customer.txt--extract customer ids
+cut -d'|' -f5 customer.txt--extract balance column
+sort customer.txt--sort records
+sort customer.txt | uniq--remove duplicate records
+sort customer.txt | uniq -d--find duplicate records
+sort customer.txt | uniq -cd--find duplicates with count
+cp customer.txt customer_bkp.txt--take backup before changes
+mv customer_new.txt customer.txt--replace old file with corrected file
+rm temp.txt--delete temporary file
+echo "record" >> customer.txt--add new record
+nano customer.txt--quick file correction
+vi customer.txt--edit file on Linux server
+sed -i 's/ACTIVE/OPEN/g' customer.txt--mass update values
+sed -i '2d' customer.txt--remove bad record by line number
+sed -i '/Velmurali/d' customer.txt--remove bad record by text
+awk -F'|' '$4=="ACTIVE"' customer.txt--filter ACTIVE customers
+awk -F'|' '$5==0' customer.txt--find zero balance accounts
+awk -F'|' '$5<0' customer.txt--find negative balance accounts
+awk -F'|' '$2==""' customer.txt--find null customer names
+awk -F'|' '$4=="ACTIVE" {count++} END{print count}' customer.txt--count ACTIVE customers
+awk -F'|' 'NR>1 {sum+=$5} END{print sum}' customer.txt--calculate total balance
+(head -1 customer.txt && tail -n +2 customer.txt | sort)--keep header on top and sort data
+wc -l file.txt--record count validation
+grep ERROR log.txt | wc -l--error count validation
+cut -d'|' -f1 customer.txt | sort | uniq -cd--find duplicate customer ids
+find . -name "*.log"--find log files
+find . -name "customer.txt"--find source file location
+find . -name "*.sh"--find shell scripts used in batch jobs
+find . -type f--list all files available in project folder
+find . -type d--list all directories/subfolders
+find . -name "*customer*"--find all customer related files
+find . -iname "*.txt"--find txt files when case is unknown
+find . -name "*.ctl"--find control files
+find . -name "*.dat"--find inbound data files
+find . -name "*.csv"--find csv files received from source
+find . -name "*.log"--locate log file before troubleshooting
+find . -name "*.txt" | wc -l--count number of txt files
+find . -name "*.log"--find log files
+find . -name "*.dat"--find inbound data files
+find . -name "*.csv"--find source csv files
+find . -name "*.sh"--find shell scripts
+chmod +x batch.sh--make batch script executable
+chmod 755 batch.sh--enable scheduler execution
+date +"%Y%m%d"--generate date for output files
+echo "Report_$(date +%Y%m%d).txt"--create dated file
+tr ',' '|'--convert CSV data to pipe delimited
+tr -d '\r'--remove Windows line endings
+paste customer_id.txt customer_name.txt--merge split files
+find . -name "*.tmp" | xargs rm--cleanup temp files
+find . -name "*.log" | xargs ls -ltr--check log file details
+grep ERROR app.log | tee error.txt--display and save errors
+job.sh | tee job_output.log--capture job output
+ps -ef | grep batch.sh--check batch job running
+ps -ef | grep perl--check perl process status
+top--check CPU and memory usage
+df -h--check disk space before batch run
+df -h--investigate disk full issue
+du -sh logs--check log directory size
+du -sh *--find space consuming folders
+-------------------------------------------------------------------------------------------------------------------------------------------
+Navigation Commands
+-------------------
+pwd--show current working directory
+cd foldername--change directory
+cd ..--move one level back/parent directory
+cd ~--go to home directory
+cd "OneDrive - Hexaware Technologies"--change directory when folder name contains spaces
+cd desktop--move to desktop folder
+cd "desktop/shell scripting - linux,perl"--change directory to path containing spaces
+cd /c/Users/2000186387--go to absolute path
+ls--check available folders before using cd
+ls -la--show detailed file listing
+File Viewing Commands
+cat customer.txt--display entire file
+cat -n customer.txt--display file with line numbers
+wc -l customer.txt--count total lines in file
+head -5 customer.txt--show first 5 lines
+head -1 customer.txt--show header only
+tail -5 customer.txt--show last 5 lines
+tail -1 customer.txt--show last line only
+tail -3 customer.txt--show last 3 lines
+tail -n +2 customer.txt--skip header,start from line 2
+tail -n +5 customer.txt--skip first 4 lines,start from line 5
+Editors
+--------
+nano customer.txt--open file in nano editor
+Ctrl+O--save file
+Ctrl+X--exit nano
+vi customer.txt--open file in vi editor
+i--enter insert mode
+Esc--exit insert mode
+dd--delete current line
+yy--copy current line
+p--paste copied line
+:w--save file
+:q--quit file
+:wq--save and quit
+:q!--quit without saving
+Chmod - permissions
+---------------------
+chmod +x script.sh--give execute permission
+chmod -x script.sh--remove execute permission
+chmod u+x script.sh--add execute permission to owner/user
+chmod g+x script.sh--add execute permission to group
+chmod o+x script.sh--add execute permission to others
+chmod u+w file.txt--add write permission to owner
+chmod g+w file.txt--add write permission to group
+chmod o+w file.txt--add write permission to others
+chmod u-r file.txt--remove read permission from owner
+chmod g-r file.txt--remove read permission from group
+chmod o-r file.txt--remove read permission from others
+chmod 755 script.sh--owner rwx,group rx,others rx
+chmod 777 script.sh--full permission to everyone
+chmod 644 file.txt--owner rw,group r,others r
+chmod 600 file.txt--owner rw only
+u--user(owner)
+g--group
+o--others
+a--all(user,group,others)
+r--read
+w--write
+x--execute
+chmod a+x script.sh--give execute permission to everyone
+chmod a-r file.txt--remove read permission from everyone
+Grep Commands (Search Pattern)
+------------------------------
+grep "ACTIVE" customer.txt--find ACTIVE,also matches INACTIVE
+grep "|ACTIVE|" customer.txt--find only ACTIVE records
+grep -n "|ACTIVE|" customer.txt--find ACTIVE records with line numbers
+grep -c "ACTIVE" customer.txt--count ACTIVE,also counts INACTIVE
+grep -c "|ACTIVE|" customer.txt--count only ACTIVE records
+grep "||" customer.txt--find records with empty fields
+grep "1009" customer.txt--find customer id 1009
+grep -i "active" customer.txt--search text ignoring case
+File Create / Append / Copy / Move / Delete
+echo "HEADER" > header.txt--create file or overwrite existing file
+echo "record" >> customer.txt--append record to end of file
+cat customer.txt >> header.txt--append file content
+cat header.txt customer.txt > customer_new.txt--merge files
+cp source.txt target.txt--copy file
+cp customer.txt customer_bkp.txt--create backup file
+mv old.txt new.txt--rename file
+mv file.txt folder/--move file to folder
+rm customer.txt--delete file
+Cut Commands (Column Extraction)
+--------------------------------
+cut -d'|' -f1 customer.txt--show column1
+cut -d'|' -f2 customer.txt--show column2
+cut -d'|' -f1,2 customer.txt--show columns1and2
+cut -d'|' -f1,2,3 customer.txt--show columns1,2,3
+cut -d'|' -f1,2,4 customer.txt--show columns1,2,4
+Sed Commands (Find, Replace, Delete)
+sed -i 's/ACTIVE/OPEN/' customer.txt--replace first match and update file
+sed -i 's/ACTIVE/OPEN/g' customer.txt--replace all matches and update file
+sed -i 's/John Smith/John S/' customer.txt--replace specific text
+sed 's/ACTIVE/OPEN/' customer.txt--show modified output only
+sed -i '2d' customer.txt--delete line2
+sed -i '2,4d' customer.txt--delete lines2to4
+sed -i '7,10d' customer.txt--delete lines7to10
+sed -i '4d;2d' customer.txt--delete only lines4and2
+sed -i '/Velmurali/d' customer.txt--delete line containing Velmurali
+sed -i '/text/d' customer.txt--delete lines containing text
+sed -i 's/450001015|/45000\1015|/' customer.txt--split merged record into new line
+Sort Commands
+-------------
+sort customer.txt--sort entire file
+sort -t'|' -k1 customer.txt--sort by column1
+sort -t'|' -k2 customer.txt--sort by column2
+sort -t'|' -k4 customer.txt--sort by column4
+Uniq Commands (Duplicates)
+--------------------------
+uniq--remove duplicate records
+uniq -c--show count of each record
+uniq -d--show duplicate records only
+uniq -u--show unique records only
+sort customer.txt | uniq--remove duplicate records
+sort customer.txt | uniq -c--show record count
+sort customer.txt | uniq -d--show duplicate records only
+sort customer.txt | uniq -cd--show duplicate records with count
+sort customer.txt | uniq | wc -l--count distinct records
+sort customer.txt | uniq -u | wc -l--count unique records
+sort customer.txt | uniq -d | wc -l--count duplicate record patterns
+(head -1 customer.txt && tail -n +2 customer.txt | sort | uniq -c)--keep header on top and count records
+Awk Commands (Filter, Count, Calculate)
+---------------------------------------
+awk--filter,extract,count and calculate data
+awk -F'|' '{print $1}' customer.txt--show column1
+awk -F'|' '{print $2}' customer.txt--show column2
+awk -F'|' '{print $1,$2,$5}' customer.txt--show customerid,name,balance
+awk -F'|' '$4=="ACTIVE"' customer.txt--show ACTIVE records
+awk -F'|' '$4=="ACTIVE" {print $1,$2,$5}' customer.txt--show ACTIVE customer details
+awk -F'|' '$5>10000' customer.txt--show balance greater than10000
+awk -F'|' '$5>10000 {print $1,$2,$5}' customer.txt--show customer details with balance greater than10000
+awk -F'|' '$5==0' customer.txt--show zero balance records
+awk -F'|' '$5==0 {print $1,$2,$5}' customer.txt--show zero balance customer details
+awk 'END{print NR}' customer.txt--count total records
+awk 'NR>1{count++} END{print count}' customer.txt--count records excluding header
+awk -F'|' '$4=="ACTIVE" {count++} END{print count}' customer.txt--count ACTIVE records
+awk -F'|' '$4=="INACTIVE" {count++} END{print count}' customer.txt--count INACTIVE records
+awk -F'|' '$4=="CLOSED" {count++} END{print count}' customer.txt--count CLOSED records
+awk -F'|' '$5>10000 {count++} END{print count}' customer.txt--count records with balance greater than10000
+awk -F'|' 'NR>1 {sum+=$5} END{print sum}' customer.txt--sum all balances
+Operators & Options
+-------------------
+>--create or overwrite file
+>>--append data to file
+|--column delimiter or pipe output to next command
+-d--delimiter option
+-f--field/column option
+-i(grep)--ignore case
+-i(sed)--update file in place
+s--substitute/replace
+g--global replace all matches
+/--sed separator
+\--newline or escape character
+-t--sort delimiter
+-k--sort column key
+&&--run next command if previous command succeeds
+()--group multiple commands together
+-F--awk field delimiter
+$1--column1
+$2--column2
+$3--column3
+$4--column4
+$5--column5
+NR--current record number
+count++--increment count by1
+sum+=$5--add column value to sum
+BEGIN{}--execute before processing records
+END{}--execute after processing records
+Find Commands--find files and folders
+--------------------------------------
+find .--show all files and folders from current directory
+find . -type f--show files only
+find . -type d--show directories only
+find . -name "customer.txt"--find specific file by name
+find . -name "*.txt"--find all txt files
+find . -name "*.sh"--find all shell script files
+find . -name "customer*"--find files starting with customer
+find . -name "*customer*"--find files containing customer
+find . -iname "*.TXT"--find txt files ignoring case
+-type f--files only
+-type d--directories only
+-name--search by exact file name
+-iname--search by file name ignoring case
+*--wildcard(any characters)
+.--current directory
+..--parent directory
+Chmod Commands--manage file permissions
+---------------------------------------
+chmod +x script.sh--give execute permission
+chmod 755 script.sh--owner rwx,group rx,others rx
+chmod 777 script.sh--all permissions to everyone
+chmod 644 file.txt--owner read/write,others read only
+chmod 600 file.txt--owner read/write only
+chmod -x script.sh--remove execute permission
+chmod u+x script.sh--add execute for user
+chmod g+x script.sh--add execute for group
+chmod o+x script.sh--add execute for others
+u--user
+g--group
+o--others
+r--read
+w--write
+x--execute
+Date Commands--work with date and time
+--------------------------------------
+date--show current date and time
+date +"%Y"--show year
+date +"%m"--show month
+date +"%d"--show day
+date +"%H"--show hour
+date +"%M"--show minute
+date +"%S"--show second
+date +"%Y%m%d"--show date as YYYYMMDD
+date +"%Y-%m-%d"--show date as YYYY-MM-DD
+date +"%d-%m-%Y"--show date as DD-MM-YYYY
+date +"%H:%M:%S"--show time only
+TR Commands--transform or replace characters
+--------------------------------------------
+tr 'a-z' 'A-Z'--convert lowercase to uppercase
+tr 'A-Z' 'a-z'--convert uppercase to lowercase
+tr ',' '|'--replace comma with pipe
+tr ' ' '_'--replace space with underscore
+tr -d '#'--delete character
+tr -d '\r'--remove carriage return
+tr -s ' '--remove extra spaces
+Paste Commands--merge files side by side
+----------------------------------------
+paste file1.txt file2.txt--merge files side by side
+paste -d'|' file1.txt file2.txt--merge using pipe delimiter
+paste -d',' file1.txt file2.txt--merge using comma delimiter
+-d--custom delimiter
+Xargs Commands--pass output as command arguments
+-------------------------------------------------
+cat files.txt | xargs rm--delete files from list
+cat files.txt | xargs cat--display multiple files
+find . -name "*.log" | xargs ls -l--show log details
+xargs--pass input as command arguments
+Tee Commands--display and save output
+--------------------------------------
+command | tee output.txt--display and save output
+command | tee -a output.txt--append output to file
+tee--display and save output
+-a--append mode
+Process Commands--monitor running processes
+------------------------------------------
+ps--show running processes
+ps -ef--show all processes
+ps -ef | grep process--find process
+ps -ef | grep java--find java process
+ps -ef | grep perl--find perl process
+top--show live system processes
+top -u username--show processes for user
+q--quit top
+Disk Commands--check disk and folder usage
+------------------------------------------
+df--show filesystem usage
+df -h--show disk usage in readable format
+df -h /tmp--check specific filesystem
+du--show directory size
+du -h--show directory size in readable format
+du -sh foldername--show total folder size
+du -sh *--show all folder sizes
+-s--summary
+-h--human readable

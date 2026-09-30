@@ -1,0 +1,348 @@
+Shell Scripting Basics
+-----------------------
+1. First Program
+File Name--hello.sh
+echo 'This is my first shell script'
+Output
+This is my first shell script
+Learning
+echo--display output on screen
+2. Variables
+File Name--variables.sh
+name='velmurali'
+age=28
+city='chennai'
+echo $name
+echo $age
+echo $city
+Output
+velmurali
+28
+chennai
+Learning
+variable--store value
+$--access variable value
+3. Variables Inside String
+File Name--variables_msg.sh
+name='velmurali'
+echo "My name is $name"
+Output
+My name is velmurali
+Learning
+double quotes expand variables
+4. Single vs Double Quotes
+File Name--quotes.sh
+name='velmurali'
+echo '$name'
+echo "$name"
+Output
+$name
+velmurali
+Learning
+single quotes--literal text
+double quotes--expand variables
+5. User Input
+File Name--read_name.sh
+echo "Enter Name"
+read name
+echo "Name is $name"
+Output
+Enter Name
+Velmurali
+Name is Velmurali
+Learning
+read--accept user input
+6. IF Condition
+File Name--if_age.sh
+read age
+if [ $age -ge 18 ]
+then
+echo "Eligible"
+fi
+Output
+20
+Eligible
+Learning
+if--start condition
+then--execute block
+fi--end condition
+7. IF ELSE
+File Name--if_else_age.sh
+read age
+if [ $age -ge 18 ]
+then
+echo "Eligible"
+else
+echo "Not Eligible"
+fi
+Output
+17
+Not Eligible
+Learning
+else--execute when condition is false
+8. ELIF
+File Name--if_marks.sh
+read marks
+if [ $marks -gt 100 ]
+then
+echo "Invalid"
+elif [ $marks -ge 85 ]
+then
+echo "Grade A"
+elif [ $marks -ge 60 ]
+then
+echo "Grade B"
+else
+echo "Grade C"
+fi
+Output
+85
+Grade A
+Learning
+elif--else if condition
+9. Logical AND
+File Name--and_condition.sh
+read age
+if [ $age -ge 18 ] && [ $age -le 60 ]
+then
+echo "Eligible"
+fi
+Learning
+&&--AND operator
+10. Logical OR
+File Name--or_condition.sh
+read marks
+if [ $marks -lt 0 ] || [ $marks -gt 100 ]
+then
+echo "Invalid Marks"
+fi
+Learning
+||--OR operator
+11. For Loop
+File Name--for_loop.sh
+for i in 1 2 3 4 5
+do
+echo $i
+done
+Output
+1
+2
+3
+4
+5
+Learning
+for--loop through values
+do--start loop block
+done--end loop block
+12. For Loop With Names
+File Name--for_names.sh
+for name in raj velmurali kumar
+do
+echo $name
+done
+Output
+raj
+velmurali
+kumar
+Learning
+for loop can iterate strings
+13. While Loop
+File Name--while_loop.sh
+count=1
+while [ $count -le 5 ]
+do
+echo $count
+count=$((count+1))
+done
+Output
+1
+2
+3
+4
+5
+Learning
+while--execute until condition becomes false
+$(( ))--perform arithmetic
+14. Case Statement
+File Name--case_grade.sh
+read grade
+case $grade in
+A)
+echo "Excellent"
+;;
+B)
+echo "Good"
+;;
+C)
+echo "Average"
+;;
+*)
+echo "Invalid Grade"
+;;
+esac
+Output
+A
+Excellent
+Learning
+case--multiple conditions
+esac--end case block
+15. Positional Parameters
+File Name--params.sh
+echo $1
+echo $2
+Execution
+sh params.sh velmurali chennai
+Output
+velmurali
+chennai
+Learning
+$1--first argument
+$2--second argument
+16. Function
+File Name--function.sh
+greet()
+{
+echo "Hello Velmurali"
+}
+greet
+Output
+Hello Velmurali
+Learning
+function--reusable block of code
+17. Function With Parameters
+File Name--function_param.sh
+greet()
+{
+echo "Hello $1"
+}
+greet Velmurali
+Output
+Hello Velmurali
+Learning
+function can accept parameters
+18. Exit Status
+File Name--exit_status.sh
+ls customer.txt
+echo $?
+Output
+0
+Learning
+$?--status of previous command
+0--success
+non-zero--failure
+19. Call One Script From Another
+File Name--main.sh
+sh hello.sh
+echo "Main Script Completed"
+Learning
+one script can call another script
+20. Current Date In Script
+File Name--date_script.sh
+echo $(date)
+Output
+current date and time
+Learning
+$( )--command substitution
+21. Read File Line By Line
+File Name--read_file.sh
+while read line
+do
+echo $line
+done < customer.txt
+Learning
+process file record by record
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+Realtime
+---------
+1. Record Count Script
+File Name--record_count.sh
+echo "Enter File Name"
+read file
+count=$(wc -l < $file)
+echo "Total Records: $count"
+Learning
+Count records in a file
+2. ACTIVE Customer Count
+File Name--active_count.sh
+count=$(grep -c "|ACTIVE|" customer.txt)
+echo "ACTIVE Customers: $count"
+Learning
+Count ACTIVE records
+3. Duplicate Record Check
+File Name--duplicate_check.sh
+dup_count=$(sort customer.txt | uniq -d | wc -l)
+echo "Duplicate Records: $dup_count"
+Learning
+Identify duplicate records
+4. Null Record Check
+File Name--null_check.sh
+null_count=$(grep -c "||" customer.txt)
+echo "Null Records: $null_count"
+Learning
+Find records with missing values
+5. Customer Search Script
+File Name--customer_search.sh
+echo "Enter Customer ID"
+read custid
+grep "$custid" customer.txt
+Learning
+Search specific customer
+6. Invalid Balance Check
+File Name--negative_balance.sh
+awk -F'|' '$5<0' customer.txt
+Learning
+Find negative balances
+7. Zero Balance Check
+File Name--zero_balance.sh
+awk -F'|' '$5==0' customer.txt
+Learning
+Find zero balance customers
+8. Total Balance Calculation
+File Name--total_balance.sh
+awk -F'|' 'NR>1 {sum+=$5} END{print sum}' customer.txt
+Learning
+Calculate total balance
+9. Customer Status Report
+File Name--status_report.sh
+echo "ACTIVE : $(grep -c "|ACTIVE|" customer.txt)"
+echo "INACTIVE : $(grep -c "|INACTIVE|" customer.txt)"
+echo "CLOSED : $(grep -c "|CLOSED|" customer.txt)"
+Learning
+Generate status summary
+10. File Validation Script
+File Name--file_validation.sh
+echo "Total Records : $(wc -l < customer.txt)"
+echo "Duplicate Records : $(sort customer.txt | uniq -d | wc -l)"
+echo "Null Records : $(grep -c "||" customer.txt)"
+Learning
+Basic batch file validation
+11. Log Error Count
+File Name--error_count.sh
+grep -c "ERROR" app.log
+Learning
+Count application errors
+12. Log Error Extraction
+File Name--error_extract.sh
+grep "ERROR" app.log > error.log
+Learning
+Separate error records
+13. Find Large Directories
+File Name--disk_usage.sh
+du -sh *
+Learning
+Find space consuming folders
+14. Disk Space Check
+File Name--disk_check.sh
+df -h
+Learning
+Verify filesystem space
+15. Batch Health Check Script
+File Name--health_check.sh
+echo "Record Count : $(wc -l < customer.txt)"
+echo "Duplicate Count : $(sort customer.txt | uniq -d | wc -l)"
+echo "Null Count : $(grep -c "||" customer.txt)"
+echo "ACTIVE Count : $(grep -c "|ACTIVE|" customer.txt)"
+Learning
+Daily support validation script
